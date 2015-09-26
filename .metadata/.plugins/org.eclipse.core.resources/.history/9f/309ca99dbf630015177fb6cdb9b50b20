@@ -1,0 +1,98 @@
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
+// PATH /rest for the REST server 
+@Path("/rest")
+public class RestService {
+    // POSITION X and Y
+	private Robot mars;
+
+
+    
+    
+	/// POST /RobotMars/rest/ STRINGS OF COMMANDS (M,L,R)
+	/// mars -> Class Robot 
+	/// move() -> Check if it can move, if so move
+	/// checkAndTurn -> Check if the command is L or R and turn the robot 
+    @POST
+    @Path("{m}")
+    @Produces("application/json")
+    public Response move(@PathParam("m") String instruction) {
+
+    	mars = new Robot();
+		String[] commands = instruction.split("");
+
+    	for (String command : commands) {
+    		
+    	    
+    		if (command.equals("M")) {
+    	        mars.move();
+    	    } else {
+    	        checkAndTurn(command);
+    	    }
+    	}
+
+
+        return Response.status(200).entity(mars.position()).build();
+
+    }
+
+    // See if the command is valid and turn the robot;
+    private boolean checkAndTurn(String command) {
+        boolean value = false;
+            switch (command) {
+                case "L":
+                    turnLeft();
+                    value = true;
+                    break;
+                case "R":
+                    turnRight();
+                    value = true;
+                    break;
+            }
+        return value;
+    }
+
+    // Make the robot turn to left updating where it is facing
+    private void turnLeft() {
+        switch (mars.getDir()) {
+            case "N":
+            	mars.setDirection("W");
+                break;
+            case "W": 
+            	mars.setDirection("S");
+                break;
+            case "S":
+            	mars.setDirection("E");
+                break;
+            case "E":
+            	mars.setDirection("N");
+                break;
+        }
+    }
+    
+    // Make the robot turn right updating where it is facing
+    private void turnRight() {
+        switch (mars.getDir()) {
+            case "N":
+            	mars.setDirection("E");
+                break;
+            case "E": 
+            	mars.setDirection("S");
+                break;
+            case "S":
+            	mars.setDirection("W");
+                break;
+            case "W":
+            	mars.setDirection("N");
+                break;
+        }
+    }
+
+  
+}
+    
+ 

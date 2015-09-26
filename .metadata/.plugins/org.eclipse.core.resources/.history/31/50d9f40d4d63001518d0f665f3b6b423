@@ -1,0 +1,151 @@
+import java.util.HashMap;
+import java.util.Map;
+
+
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
+ 
+@Path("/rest")
+public class RestService {
+    // POSITION X and Y
+    private int position_x;
+
+    private int position_y;
+
+    private String direction;
+
+    private String output;
+    
+    
+    @POST
+    @Path("/create")
+    @Produces("application/json")
+    public Response makeMap() {
+            position_x = 0;
+            position_y = 0;
+            direction = "N";
+            output = "Robot Started"; 
+            return Response.status(200).entity(output).build();
+    }
+    
+    private String DirectionName(String pos) {
+        // Create a dictionary
+        Map<String, String> map = new HashMap<String, String>();
+        
+        map.put("N", "North");
+        map.put("S", "South");
+        map.put("W", "West");
+        map.put("E", "East");
+
+        return map.get(pos);
+
+    }
+
+
+    @POST
+    @Path("/position")
+    @Produces("application/json")
+    public Response position() {
+        output = "X: " + position_x + "Y: " + position_y + "Direction: " + DirectionName(direction);
+        return Response.status(200).entity(output).build();
+    }
+
+
+    @POST
+    @Path("/{param}")
+    public Response move(@PathParam("param") String instruction) {
+
+
+
+	    if (instruction.equals("M")) {
+	        move();
+	    } else {
+	        checkAndTurn(instruction);
+	    }
+
+
+        
+        return Response.status(200).entity(output).build();
+
+    }
+
+    // See if the command and turn the robot;
+    private boolean checkAndTurn(String command) {
+        boolean value = false;
+            switch (command) {
+                case "L":
+                    turnLeft();
+                    value = true;
+                    break;
+                case "S":
+                    turnRight();
+                    value = true;
+                    break;
+            }
+        return value;
+    }
+
+    private void turnLeft() {
+        switch (direction) {
+            case "N":
+                direction = "W";
+                break;
+            case "W": 
+                direction = "S";
+                break;
+            case "S":
+                direction = "E";
+                break;
+            case "E":
+                direction = "N";
+                break;
+        }
+    }
+    
+    private void turnRight() {
+        switch (direction) {
+            case "N":
+                direction = "L";
+                break;
+            case "W": 
+                direction = "S";
+                break;
+            case "S":
+                direction = "W";
+                break;
+            case "E":
+                direction = "N";
+                break;
+        }
+    }
+
+    private void move() {
+        switch (direction) {
+            case "N":
+                if (position_y < 5) {
+                    position_y++;
+                }
+                break;
+            case "S": 
+                if (position_y > 0) {
+                    position_y--;
+                }
+                break;
+            case "E":
+                if (position_x < 5) {
+                    position_x++;
+                }
+                break;
+            case "W":
+                if (position_x > 0) {
+                    position_x--;
+                }
+                break;
+        }
+    }
+}
+    
+ 

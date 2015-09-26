@@ -1,0 +1,74 @@
+import java.util.HashMap;
+import java.util.Map;
+
+
+public class Robot {
+	private int x;
+	private int y;
+	private String direction;
+	
+	public Robot() {
+		x = 0;
+		y = 0;
+		direction = "N";
+	}
+	
+
+    public String position() {
+        return "{'robotMars': \n"
+        		+ "   {'x' : '" + x +"'\n"
+        		+ "    'y' : '" + y +"'\n"
+        		+ "     'direction : '" + DirectionName() +"'\n" 
+        		+ "   }\n"
+        		+ "}\n";
+       
+    }
+
+	
+	public String getDir() {
+		return direction;
+	}
+	
+	
+	public void setDirection(String value){
+		direction = value;
+	}
+	
+    private String DirectionName() {
+        // Create a dictionary
+        Map<String, String> map = new HashMap<String, String>();
+        
+        map.put("N", "North");
+        map.put("S", "South");
+        map.put("W", "West");
+        map.put("E", "East");
+
+        return map.get(direction);
+
+    }
+    
+	public void move() {
+        switch (direction) {
+            case "N":
+            if (y < 5) {
+                y++;
+            }
+            break;
+        case "S": 
+            if (y > 0) {
+                y--;
+            }
+            break;
+        case "E":
+            if (x < 5) {
+                x++;
+            }
+            break;
+        case "W":
+            if (x > 0) {
+                x--;
+            }
+            break;
+        }	
+	}
+}

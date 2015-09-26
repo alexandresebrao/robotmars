@@ -1,0 +1,56 @@
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
+ 
+@Path("/rest")
+public class RestService {
+    // POSITION X and Y
+    int position_x;
+
+    int position_y;
+
+    String direction = "";
+
+    String output;
+    
+    
+    @POST
+    @Path("/ð")
+    @Produces("application/json")
+    public Response makeMap() {
+            position_x = 0;
+            position_y = 0;
+            direction = "N";
+            output = "Robot Started"; 
+            return Response.status(200).entity(output).build();
+    }
+    
+    private String DirectionName(String pos) {
+        // Create a dictionary
+        Map<String, String> map = new HashMap<String, String>();
+        
+        map.put("N", "North");
+        map.put("S", "South");
+        map.put("W", "West");
+        map.put("E", "East");
+
+        return map.get(pos);
+
+    }
+
+
+    @POST
+    @Path("/position")
+    @Produces("application/json")
+    public Response position() {
+        output = "X: " + position_x + "Y: " + position_y + "Direction: " + DirectionName(direction);
+        return Response.status(200).entity(output).build();
+    }
+
+}

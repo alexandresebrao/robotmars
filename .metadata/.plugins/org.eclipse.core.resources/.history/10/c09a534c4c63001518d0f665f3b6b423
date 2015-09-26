@@ -1,0 +1,12 @@
+
+public class Robot {
+	private int x;
+	private int y;
+	private String direction;
+	
+	public Robot() {
+		x = 0;
+		y = 0;
+		direction = "N";
+	}
+}

@@ -1,0 +1,36 @@
+
+public class Robot {
+	private int x;
+	private int y;
+	private String direction;
+	
+	public Robot() {
+		x = 0;
+		y = 0;
+		direction = "N";
+	}
+	
+	public int getX() {
+		return x;
+	}
+	
+	public int getY() {
+		return y;
+	}
+	
+	public String getDir() {
+		return direction
+	}
+	
+	public void setX(int value) {
+		x = value;
+	}
+	
+	public void setY(int value) {
+		y = value;
+	}
+	
+	public void setDirection(String value){
+		direction = value;
+	}
+}

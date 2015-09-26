@@ -1,0 +1,57 @@
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
+
+public class Robot {
+	private int x;
+	private int y;
+	private String direction;
+	
+	public Robot() {
+		x = 0;
+		y = 0;
+		direction = "N";
+	}
+	
+
+    public return position() {
+        String output = "X: " + x + "Y: " + y + "Direction: " + direction;
+        
+    }
+
+	
+	public String getDir() {
+		return direction;
+	}
+	
+	
+	public void setDirection(String value){
+		direction = value;
+	}
+	
+	public void move() {
+        switch (direction) {
+            case "N":
+            if (y < 5) {
+                y++;
+            }
+            break;
+        case "S": 
+            if (y > 0) {
+                y--;
+            }
+            break;
+        case "E":
+            if (x < 5) {
+                x++;
+            }
+            break;
+        case "W":
+            if (x > 0) {
+                x--;
+            }
+            break;
+        }	
+	}
+}
